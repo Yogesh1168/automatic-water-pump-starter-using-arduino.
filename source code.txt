@@ -1,0 +1,37 @@
+const int trigPin = 10;
+const int echoPin = 9;
+const int relay = 11;
+// defines variables
+long duration;
+int distance;
+int safetyDistance;
+void setup() {
+pinMode(trigPin, OUTPUT); // Sets the trigPin as an Output
+pinMode(echoPin, INPUT); // Sets the echoPin as an Input
+pinMode(relay, OUTPUT);
+Serial.begin(9600); // Starts the serial communication
+}
+void loop() {
+// Clears the trigPin
+digitalWrite(trigPin, LOW);
+delay(3000); // Sets the trigPin on HIGH state for 10 micro seconds
+digitalWrite(trigPin, HIGH);
+delay(3000);
+digitalWrite(trigPin, LOW); // Reads the echoPin, returns the sound wave travel time in
+microseconds
+duration = pulseIn(echoPin, HIGH); // Calculating the distance
+distance= duration*0.034/2;
+safetyDistance = distance;
+if (safetyDistance <=7 )
+{
+digitalWrite(buzzer, LOW);
+digitalWrite(relay, HIGH);
+}
+else {
+digitalWrite(buzzer, LOW);
+digitalWrite(relay, LOW);
+}
+// Prints the distance on the Serial Monitor
+Serial.print("Distance: ");
+Serial.println(distance);
+}
